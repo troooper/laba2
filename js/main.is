@@ -1,0 +1,133 @@
+"use strict";
+
+/**
+ * Adress
+ */
+
+const addressBtn = document.querySelector('.address .button');
+
+addressBtn.addEventListener('click', function() {
+    const addressVars = document.querySelectorAll('.address input');
+    const result = document.getElementById("addressResult");
+    if ( (addressVars[0].value && addressVars[1].value && addressVars[2].value && addressVars[3].value && addressVars[4].value && addressVars[5].value ) == 0) {
+        result.innerHTML = 'Сталася помилка. Необхідно заповнити всі поля!';
+    } else {
+        result.innerHTML = addressVars[0].value + ', ' + addressVars[1].value + ', ' + addressVars[2].value + ', ' + addressVars[3].value + ', ' + addressVars[4].value + ', ' + addressVars[5].value;
+    }
+});
+
+
+/**
+ * Converter
+ */
+
+const valArr = [0, 27.765, 31.609, 2.728];
+let currArr = document.querySelectorAll('.converter input');
+
+// UAH -> USD, EUR, RUB
+currArr[0].addEventListener("change", function() {
+    for (let i = 1; i <= 3; i++) {
+        if ( i === 3 ) {
+            currArr[i].value = parseInt( (currArr[0].value * valArr[i]) * 1000 ) / 1000; 
+        } else {
+            currArr[i].value = parseInt( (currArr[0].value / valArr[i]) * 1000 ) / 1000;
+        }
+    }
+});
+
+// USD -> UAH, EUR, RUB
+currArr[1].addEventListener("change", function() {
+    for (let i = 3; i >= 0; i--) {
+        if ( i === 3 ) {
+            currArr[i].value = parseInt( (currArr[1].value * 75.772) * 1000 ) / 1000;
+        } else if ( i === 2 ) {
+            currArr[i].value = parseInt( (currArr[1].value * 0.878) * 1000 ) / 1000;
+        } else if ( i === 1 ) {
+            continue;
+        } else {
+            currArr[i].value = parseInt( (currArr[1].value * 27.765 ) * 1000 ) / 1000;
+        }
+    }
+});
+
+// EUR -> UAH, USD, RUB
+currArr[2].addEventListener("change", function() {
+    for (let i = 0; i <= 3; i++) {
+        if ( i === 0 ) {
+            currArr[i].value = parseInt( (currArr[2].value * 31.652) * 1000 ) / 1000;
+        } else if ( i === 1 ) {
+            currArr[i].value = parseInt( (currArr[2].value * 1.14) * 1000 ) / 1000;
+        } else if ( i === 2 ) {
+            continue;
+        } else {
+            currArr[i].value = parseInt( (currArr[2].value * 86.38 ) * 1000 ) / 1000;
+        }
+    }
+});
+
+// RUB -> UAH, USD, EUR
+currArr[3].addEventListener("change", function() {
+    for (let i = 0; i <= 3; i++) {
+        if ( i === 0 ) {
+            currArr[i].value = parseInt( (currArr[3].value * 0.366) * 1000 ) / 1000;
+        } else if ( i === 1 ) {
+            currArr[i].value = parseInt( (currArr[3].value * 0.01320) * 1000 ) / 1000;
+        } else if ( i === 2 ) {
+            currArr[i].value = parseInt( (currArr[3].value * 0.011) * 1000 ) / 1000;
+        } else {
+            continue;
+        }
+    }
+});
+
+
+/**
+ * Employee
+ */
+
+const fieldAnswers = document.querySelectorAll('.employee input'),
+      employeeBtn = document.querySelector('.employee .button'),
+      dataDelivery = document.querySelectorAll('.list span.data_reciever'),
+      noInfo = document.querySelector('.no-info');
+
+const employeeDB = {
+    lastName: 'Коркач',
+    firstName: 'Костянтин',
+    position: 'Team Leader',
+    salary: 145000
+};
+const taxes = (employeeDB.salary / 100) * 5 + ' грн (5%)';
+
+employeeBtn.addEventListener('click', function() {
+    if (fieldAnswers[0].value == employeeDB.lastName && fieldAnswers[1].value == employeeDB.firstName ) {
+        dataDelivery[0].innerHTML = employeeDB.lastName + ' ' + employeeDB.firstName;
+        dataDelivery[1].innerHTML = employeeDB.position;
+        dataDelivery[2].innerHTML = employeeDB.salary + ' грн';
+        dataDelivery[3].innerHTML = taxes;
+        noInfo.innerHTML = '';
+    } else {
+        noInfo.innerHTML = 'Інформацію не знайдено. Перевірте введені дані.';
+    }
+});
+
+
+/**
+ * User
+ */
+
+const userInputs = document.querySelectorAll('.user input'),
+      dNum = new Date().toLocaleDateString();
+
+const userDB = {
+    login: 'korkach',
+    name: 'Костянтин',
+    surname: 'Коркач',
+    age: 19,
+    date: dNum
+};
+
+userInputs[0].value = userDB.login;
+userInputs[1].value = userDB.name;
+userInputs[2].value = userDB.surname;
+userInputs[3].value = userDB.age;
+userInputs[4].value = userDB.date;
